@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたはなにもち？</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen">
+            <h1>あなたはなにもち？</h1>
+            <p>8つの質問に答えて、あなたの「もちタイプ」を診断しよう！</p>
+            <button id="start-button">診断をはじめる</button>
+        </div>
+        <div id="question-screen" class="hidden">
+            <h2 id="question-text"></h2>
+            <div id="options-container"></div>
+        </div>
+        <div id="result-screen" class="hidden">
+            <h2>あなたの診断結果は...</h2>
+            <h3 id="result-title"></h3>
+            <img id="result-image" src="" alt="診断結果の画像">
+            <p id="result-description"></p>
+            <button id="share-button">Xでシェア</button>
+            <button id="restart-button">もう一度診断する</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
