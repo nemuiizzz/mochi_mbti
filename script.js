@@ -4,6 +4,7 @@ const resultScreen = document.getElementById('result-screen');
 
 const startButton = document.getElementById('start-button');
 const restartButton = document.getElementById('restart-button');
+const backButton = document.getElementById('back-button');
 
 const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
@@ -137,16 +138,19 @@ let scores = {
     T: 0, F: 0,
     J: 0, P: 0
 };
+let answerHistory = [];
 
 startButton.addEventListener('click', startGame);
 restartButton.addEventListener('click', restartGame);
 shareButton.addEventListener('click', shareResult);
+backButton.addEventListener('click', goBack);
 
 function startGame() {
     startScreen.classList.add('hidden');
     questionScreen.classList.remove('hidden');
     currentQuestionIndex = 0;
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    answerHistory = [];
     showQuestion();
 }
 
@@ -160,15 +164,26 @@ function showQuestion() {
         button.addEventListener('click', () => selectOption(option.type));
         optionsContainer.appendChild(button);
     });
+    backButton.classList.toggle('hidden', currentQuestionIndex === 0);
 }
 
 function selectOption(type) {
     scores[type]++;
+    answerHistory.push(type);
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
         showQuestion();
     } else {
         showResult();
+    }
+}
+
+function goBack() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        const lastAnswer = answerHistory.pop();
+        scores[lastAnswer]--;
+        showQuestion();
     }
 }
 
@@ -182,7 +197,6 @@ function showResult() {
         (scores.T >= scores.F ? 'T' : 'F') +
         (scores.J >= scores.P ? 'J' : 'P');
 
-    // 仮実装：特定のタイプがない場合はデフォルトを表示
     const result = results[resultType] || results['default'];
 
     resultTitle.innerText = result.title;
